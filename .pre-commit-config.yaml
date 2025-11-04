@@ -1,0 +1,61 @@
+# See https://pre-commit.com for more information
+# To install: pre-commit install
+# To run manually: pre-commit run --all-files
+
+# Disable autofix PRs if using pre-commit.ci
+ci:
+  autofix_prs: false
+
+repos:
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-docstring-first
+      - id: debug-statements
+      - id: pretty-format-json
+        args: [--autofix, --no-ensure-ascii, --no-sort-keys]
+
+  # Python linting and formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.12
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  # GitHub Actions security
+  - repo: https://github.com/woodruffw/zizmor-pre-commit
+    rev: v1.12.1
+    hooks:
+      - id: zizmor
+
+  # Poetry validation
+  - repo: local
+    hooks:
+      - id: poetry-check
+        name: poetry check
+        description: Validate pyproject.toml configuration
+        entry: poetry check
+        language: system
+        pass_filenames: false
+        files: ^(.*/)?(poetry\.lock|pyproject\.toml)$
+
+  # Tests with coverage
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest with coverage
+        entry: poetry run pytest tests -v --cov=src --cov-fail-under=80
+        language: system
+        pass_filenames: false
+        always_run: true
