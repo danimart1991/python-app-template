@@ -1,0 +1,50 @@
+name: Run Application
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      text:
+        description: "Text to process (optional)"
+        required: false
+        type: string
+
+jobs:
+  run:
+    name: Execute Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.0.0
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Install dependencies (production only)
+        run: poetry install --no-interaction --only main
+
+      - name: Run application
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ -n "${{ github.event.inputs.text }}" ]; then
+            echo "Running with custom text..."
+            poetry run my-app --text "${{ github.event.inputs.text }}"
+          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "Running without arguments (will show help)..."
+            poetry run my-app || echo "Showed help as expected"
+          else
+            echo "Running from push to main..."
+            poetry run my-app --text "Deployed to main branch on $(date)"
+          fi
+
+      - name: Show version
+        run: poetry run my-app --version

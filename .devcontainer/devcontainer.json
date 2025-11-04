@@ -1,0 +1,84 @@
+{
+    "name": "Python App Template",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    // Configure tool-specific properties
+    "customizations": {
+        "vscode": {
+            // Extensions to install
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "charliermarsh.ruff",
+                "github.vscode-github-actions",
+                "eamodio.gitlens"
+            ],
+            // Settings
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.testing.pytestEnabled": true,
+                "python.testing.unittestEnabled": false,
+                "python.testing.pytestArgs": [
+                    "tests",
+                    "-v",
+                    "--no-cov"
+                ],
+                "python.testing.cwd": "${workspaceFolder}",
+                "python.testing.autoTestDiscoverOnSaveEnabled": true,
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff",
+                    "editor.formatOnSave": true,
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": "explicit",
+                        "source.fixAll": "explicit"
+                    }
+                },
+                "ruff.enable": true,
+                "ruff.organizeImports": true,
+                "ruff.fixAll": true,
+                "editor.formatOnSave": true,
+                "files.exclude": {
+                    "**/__pycache__": true,
+                    "**/*.pyc": true,
+                    "**/.pytest_cache": true,
+                    "**/.ruff_cache": true,
+                    "**/.coverage": true,
+                    "**/htmlcov": true,
+                    "**/*.egg-info": true
+                },
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                }
+            }
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally
+    "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created
+    "postCreateCommand": "poetry install && poetry run pre-commit install",
+    // Comment out to connect as root instead
+    "remoteUser": "vscode",
+    // Features to add to the dev container
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/github-cli:1": {
+            "version": "latest"
+        }
+    },
+    // Set environment variables
+    "remoteEnv": {
+        "PYTHONPATH": "${containerWorkspaceFolder}/src"
+    },
+    // Mounts
+    "mounts": [
+        // Mount .gitconfig for git configuration
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
+    ]
+}
