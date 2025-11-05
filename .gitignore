@@ -2,7 +2,6 @@
 __pycache__/
 
 # Poetry
-poetry.lock
 .venv/
 
 # Unit test / coverage reports
@@ -16,7 +15,6 @@ coverage.xml
 .ruff_cache/
 
 # IDEs
-.vscode/
 .idea/
 
 # Project specific

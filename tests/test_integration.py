@@ -13,7 +13,7 @@ class TestAppIntegration:
     def test_app_executable_exists(self) -> None:
         """Test that the app can be executed via poetry."""
         result = subprocess.run(
-            ["poetry", "run", "my-app", "--help"],
+            [sys.executable, "-m", "src.main", "--help"],
             capture_output=True,
             text=True,
             check=False,
@@ -26,7 +26,7 @@ class TestAppIntegration:
         """Test app execution with --text argument."""
         test_text = "Integration test message"
         result = subprocess.run(
-            ["poetry", "run", "my-app", "--text", test_text],
+            [sys.executable, "-m", "src.main", "--text", test_text],
             capture_output=True,
             text=True,
             check=False,
@@ -43,7 +43,6 @@ class TestAppIntegration:
             capture_output=True,
             text=True,
             check=False,
-            cwd="src",
         )
 
         assert result.returncode == 0

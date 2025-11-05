@@ -13,7 +13,7 @@ def _get_version() -> str:
         return "0.0.0"
 
 
-def process_text(text: str) -> str:
+def _process_text(text: str) -> str:
     """
     Process the input text.
 
@@ -69,7 +69,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.text is not None:
-        result = process_text(args.text)
+        result = _process_text(args.text)
         print(result)
         return 0
     else:

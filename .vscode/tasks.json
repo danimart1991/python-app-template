@@ -1,0 +1,207 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "App: Run",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "src.main",
+        "--text",
+        "Hello from VS Code!"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Test: All",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "run",
+        "pytest",
+        "-v"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Test: Unit Only",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "run",
+        "pytest",
+        "-v",
+        "-m",
+        "not integration"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Test: Integration Only",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "run",
+        "pytest",
+        "-m",
+        "integration",
+        "-v"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Test: With Coverage",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "run",
+        "pytest",
+        "--cov=src",
+        "--cov-report=html",
+        "--cov-report=term",
+        "-v"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Quality: Lint (Ruff)",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "run",
+        "ruff",
+        "check",
+        "."
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Quality: Format (Ruff)",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "run",
+        "ruff",
+        "format",
+        "."
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Quality: Pre-commit (All Files)",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "run",
+        "pre-commit",
+        "run",
+        "--all-files"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Dependencies: Install",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "install"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Dependencies: Update",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "update"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Dependencies: Check Poetry Config",
+      "type": "shell",
+      "command": "poetry",
+      "args": [
+        "check"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Maintenance: Clean Cache",
+      "type": "shell",
+      "command": "rm",
+      "args": [
+        "-rf",
+        ".pytest_cache",
+        ".ruff_cache",
+        ".coverage",
+        "htmlcov",
+        "**/__pycache__"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}

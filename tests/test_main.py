@@ -2,7 +2,7 @@
 
 import pytest
 
-from src.main import _create_parser, main, process_text
+from src.main import _create_parser, _process_text, main
 
 
 class TestProcessText:
@@ -11,20 +11,20 @@ class TestProcessText:
     @pytest.mark.unit
     def test_process_text_returns_input(self, sample_text: str) -> None:
         """Test that process_text returns the input text unchanged."""
-        result = process_text(sample_text)
+        result = _process_text(sample_text)
         assert result == sample_text
 
     @pytest.mark.unit
     def test_process_text_with_empty_string(self) -> None:
         """Test process_text with an empty string."""
-        result = process_text("")
+        result = _process_text("")
         assert result == ""
 
     @pytest.mark.unit
     def test_process_text_with_special_characters(self) -> None:
         """Test process_text with special characters."""
         text = "Hello! @#$ %^& *() World"
-        result = process_text(text)
+        result = _process_text(text)
         assert result == text
 
 

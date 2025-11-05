@@ -9,53 +9,14 @@
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance",
+        "ms-python.debugpy",
         "charliermarsh.ruff",
-        "github.vscode-github-actions",
-        "eamodio.gitlens"
-      ],
-      "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.testing.pytestEnabled": true,
-        "python.testing.unittestEnabled": false,
-        "python.testing.pytestArgs": [
-          "tests",
-          "-v",
-          "--no-cov"
-        ],
-        "python.testing.cwd": "${workspaceFolder}",
-        "python.testing.autoTestDiscoverOnSaveEnabled": true,
-        "[python]": {
-          "editor.defaultFormatter": "charliermarsh.ruff",
-          "editor.formatOnSave": true,
-          "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit",
-            "source.fixAll": "explicit"
-          }
-        },
-        "ruff.enable": true,
-        "ruff.organizeImports": true,
-        "ruff.fixAll": true,
-        "editor.formatOnSave": true,
-        "files.exclude": {
-          "**/__pycache__": true,
-          "**/*.pyc": true,
-          "**/.pytest_cache": true,
-          "**/.ruff_cache": true,
-          "**/.coverage": true,
-          "**/htmlcov": true,
-          "**/*.egg-info": true
-        },
-        "terminal.integrated.defaultProfile.linux": "bash",
-        "terminal.integrated.profiles.linux": {
-          "bash": {
-            "path": "/bin/bash"
-          }
-        }
-      }
+        "github.vscode-github-actions"
+      ]
     }
   },
   "forwardPorts": [],
-  "postCreateCommand": "poetry install && poetry run pre-commit install",
+  "postCreateCommand": "poetry install && poetry run pre-commit install && git config --global core.editor 'code --wait'",
   "remoteUser": "vscode",
   "features": {
     "ghcr.io/devcontainers/features/git:1": {

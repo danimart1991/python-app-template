@@ -21,9 +21,7 @@ RUN apt-get update \
 
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 - \
-    && ln -s /root/.local/bin/poetry /usr/local/bin/poetry \
-    # Configure Poetry
-    && poetry config virtualenvs.create false
+    && ln -s /root/.local/bin/poetry /usr/local/bin/poetry
 
 # Create a non-root user
 ARG USERNAME=vscode
@@ -39,8 +37,8 @@ RUN groupadd --gid "$USER_GID" "$USERNAME" \
 USER $USERNAME
 RUN curl -sSL https://install.python-poetry.org | python3 - \
     && echo 'export PATH="/home/vscode/.local/bin:$PATH"' >> /home/vscode/.bashrc \
-    # Configure Poetry for vscode user
-    && /home/vscode/.local/bin/poetry config virtualenvs.create false
+    # Configure Poetry for vscode user to create venvs in project
+    && /home/vscode/.local/bin/poetry config virtualenvs.in-project true
 
 # Set PATH
 ENV PATH="/home/vscode/.local/bin:$PATH"
