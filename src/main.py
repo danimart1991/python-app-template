@@ -48,7 +48,7 @@ def _create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--text",
         type=str,
-        help="Text to process and display",
+        help="Text to process and displays",
         required=False,
     )
 
