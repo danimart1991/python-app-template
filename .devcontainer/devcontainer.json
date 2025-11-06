@@ -13,23 +13,25 @@
         "charliermarsh.ruff",
         "github.vscode-github-actions"
       ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "README.md"
+      ]
     }
   },
   "forwardPorts": [],
-  "postCreateCommand": "poetry install && poetry run pre-commit install && git config --global core.editor 'code --wait'",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "remoteUser": "vscode",
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/github-cli:1": {
-      "version": "latest"
-    }
-  },
+  "features": {},
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh-host,type=bind,readonly",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig-host,type=bind,readonly"
+  ],
   "remoteEnv": {
     "PYTHONPATH": "${containerWorkspaceFolder}/src"
   },
-  "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
-  ]
+  "containerEnv": {
+    "GITHUB_CODESPACES": "${localEnv:CODESPACES}"
+  }
 }
