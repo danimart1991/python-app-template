@@ -1,4 +1,13 @@
+# =============================================================================
+# Build System (Poetry-specific, needed for building packages)
+# =============================================================================
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
+# =============================================================================
+# Project Metadata (PEP 621 - Tool-agnostic standard)
+# =============================================================================
 [project]
 name = "python-app-template"
 version = "0.1.0"
@@ -8,7 +17,7 @@ readme = "README.md"
 requires-python = ">=3.11,<4.0"
 license = "MIT"
 keywords = ["python", "template", "app", "poetry", "starter"]
-dynamic = ["dependencies"]
+dependencies = []
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -24,22 +33,26 @@ Repository = "https://github.com/yourusername/python-app-template"
 [project.scripts]
 my-app = "src.main:main"
 
+# =============================================================================
+# Dependency Groups (PEP 735 - Tool-agnostic, works with Poetry, uv, pdm, etc.)
+# =============================================================================
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3,<5.0",
+    "pytest>=8.4,<9.0",
+    "pytest-cov>=7.0,<8.0",
+    "ruff>=0.14,<1.0",
+]
+
+# =============================================================================
+# Poetry Configuration (Only package structure definition)
+# =============================================================================
 [tool.poetry]
 packages = [{ include = "src" }]
 
-[tool.poetry.group.dev.dependencies]
-pre-commit = ">=4.3,<5.0"
-pytest = ">=8.4,<9.0"
-pytest-cov = ">=7.0,<8.0"
-ruff = ">=0.14,<1.0"
-
-[tool.poetry.dependencies]
-python = ">=3.11,<4.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
+# =============================================================================
+# Ruff Configuration (Linting & Formatting)
+# =============================================================================
 [tool.ruff]
 line-length = 100
 target-version = "py311"
@@ -67,6 +80,9 @@ known-first-party = ["src"]
 quote-style = "double"
 indent-style = "space"
 
+# =============================================================================
+# Pytest Configuration (Testing)
+# =============================================================================
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
@@ -79,7 +95,9 @@ markers = [
     "slow: Slow tests",
 ]
 
-# Coverage configuration (run with --cov flag when needed)
+# =============================================================================
+# Coverage Configuration (Code Coverage)
+# =============================================================================
 [tool.coverage.run]
 source = ["src"]
 omit = ["tests/*", "**/__pycache__/*"]
