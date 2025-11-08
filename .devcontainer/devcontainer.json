@@ -36,7 +36,7 @@
     "PYTHONUNBUFFERED": "1"
   },
   "remoteEnv": {
-    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
+    "PATH": "/home/vscode/.local/bin:${containerEnv:PATH}:${containerWorkspaceFolder}/.venv/bin"
   },
   "forwardPorts": [],
   "shutdownAction": "stopContainer",
