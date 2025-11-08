@@ -10,8 +10,7 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-python.debugpy",
-        "charliermarsh.ruff",
-        "github.vscode-github-actions"
+        "charliermarsh.ruff"
       ]
     },
     "codespaces": {
@@ -23,15 +22,16 @@
   "forwardPorts": [],
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "remoteUser": "vscode",
-  "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": false
+    }
+  },
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh-host,type=bind,readonly",
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig-host,type=bind,readonly"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig-host,type=bind,consistency=cached,readonly"
   ],
   "remoteEnv": {
     "PYTHONPATH": "${containerWorkspaceFolder}/src"
-  },
-  "containerEnv": {
-    "GITHUB_CODESPACES": "${localEnv:CODESPACES}"
   }
 }

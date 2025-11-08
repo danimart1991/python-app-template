@@ -25,21 +25,25 @@ poetry run my-app --text "Hello World"
 
 ## Features
 
-- ✅ Modern Python application with argparse
-- ✅ Poetry for dependency management
-- ✅ Ruff for linting and formatting (replaces black, isort, flake8)
+- ✅ Modern Python application with Poetry dependency management
+- ✅ Ruff for fast linting and formatting
 - ✅ Pytest with 80% coverage requirement
-- ✅ Pre-commit hooks with 17 checks (including security)
-- ✅ GitHub Actions CI/CD (PR validation + main execution)
-- ✅ Trunk-based development workflow
-- ✅ Dev Container support (Docker + Codespaces)
+- ✅ Pre-commit hooks with 17 automated checks
+- ✅ GitHub Actions CI/CD workflow
+- ✅ Dev Container support (Windows, Mac, Linux, Codespaces)
 - ✅ Automated dependency updates (Dependabot)
 
 ## Requirements
 
+**Local development:**
+
 - Python 3.11+
 - Poetry 2.0+
-- (Optional) Docker Desktop for devcontainer
+
+**Dev Container (optional but recommended):**
+
+- VS Code with Dev Containers extension
+- Docker OR GitHub Codespaces
 
 ## Installation
 
@@ -50,32 +54,18 @@ poetry install
 poetry run pre-commit install  # Enable git hooks
 ```
 
-### Option 2: Development Container (recommended for multi-machine/Codespaces)
+### Option 2: Development Container (recommended)
 
-**Prerequisites:**
-
-- VS Code with "Dev Containers" extension
-- Docker Desktop (for local) OR GitHub Codespaces (cloud)
-
-**Usage:**
-
-1. Open the project in VS Code
-2. Press `Ctrl+Shift+P` → "Dev Containers: Reopen in Container"
-3. Wait for the container to build (first time: ~2-3 minutes)
-4. Everything is pre-configured: Python, Poetry, pre-commit, extensions
+Open in VS Code → `Ctrl+Shift+P` → "Dev Containers: Reopen in Container"
 
 **Benefits:**
 
-- ✅ Same environment on Windows, Mac, Linux, and Codespaces
-- ✅ No need to install Python or Poetry on your machine
-- ✅ Isolated from your system
-- ✅ Instant setup on new machines
+- ✅ Works on Windows, Mac, Linux, and GitHub Codespaces
+- ✅ No local Python/Poetry installation needed
+- ✅ Git authentication handled automatically by VS Code
+- ✅ Everything pre-configured in ~2-3 minutes
 
-```bash
-# Inside the container, everything is ready:
-poetry run pytest
-poetry run my-app --help
-```
+> **Note:** When using Git inside the container, VS Code will handle authentication. Your Git credentials from the host are imported automatically.
 
 ## Customization
 
@@ -155,17 +145,13 @@ poetry check
 
 ### Pre-commit Hooks
 
-Pre-commit runs automatically on every commit and includes:
+Runs automatically on every commit with 17 checks:
 
-- File formatting checks (whitespace, EOF, etc.)
-- YAML/JSON/TOML validation
+- File formatting, YAML/JSON/TOML validation
+- Ruff linting and formatting (auto-fix)
 - Python syntax validation
-- Ruff linting and formatting
-- GitHub Actions security analysis (zizmor)
-- Poetry configuration validation
+- Security checks
 - Full test suite with 80% coverage
-
-If a check fails, fix the issues and commit again. Pre-commit will auto-fix some issues (like formatting).
 
 ## Project Structure
 
@@ -192,110 +178,43 @@ python-app-template/
 
 ## Workflows
 
-### Trunk-Based Development
+### Git Workflow
 
-This project follows trunk-based development:
-
-- One main branch: `main`
-- Short-lived feature branches for PRs
-- Fast integration (daily merges)
-
-**Workflow:**
+Trunk-based development: one `main` branch + short-lived feature branches
 
 ```bash
-# 1. Create branch from main
-git checkout main && git pull
-git checkout -b yourname/short-description
-
-# 2. Make changes (pre-commit validates automatically)
-git add .
-git commit -m "feat: description"
-
-# 3. Push and create PR to main
-git push origin yourname/short-description
-
-# 4. After merge, clean up
-git checkout main && git pull
-git branch -d yourname/short-description
+git checkout -b yourname/feature    # Create branch
+git commit -m "feat: description"   # Pre-commit validates automatically
+git push origin yourname/feature    # Create PR
+# After merge: git checkout main && git pull
 ```
 
 ### CI/CD
 
-**PR Workflow** (`.github/workflows/ci-cd.yml`):
-
-- Triggers on PRs to `main`
-- Runs all pre-commit hooks
-- Validates application functionality
-- Must pass before merge
-
-**Main Workflow** (`.github/workflows/run-app.yml`):
-
-- Triggers on push to `main`
-- Installs production dependencies only
-- Executes the application
-- Manual trigger available
-
-### Dependabot
-
-Automated dependency updates run weekly (Mondays at 9:00 AM):
-
-- Python packages (pip ecosystem)
-- GitHub Actions versions
-
-Pull requests are automatically created with:
-
-- 5 max concurrent PRs per ecosystem
-- CI validation before merge
-- Labels: `dependencies`, `python`, `github-actions`
+**PR Workflow:** Validates PRs with all pre-commit hooks before merge
+**Main Workflow:** Executes application on push to `main`
+**Dependabot:** Weekly automated dependency updates (Python + GitHub Actions)
 
 ## VS Code Integration
 
-Included configuration:
+Pre-configured settings included:
 
-- Python interpreter setup
-- Ruff as default formatter
+- Python interpreter auto-detection
+- Ruff formatter and linter
 - Debug configurations
-- Task runner for common commands
+- Test discovery
 - Recommended extensions
 
-**Available tasks** (Ctrl+Shift+P → "Tasks: Run Task"):
-
-- Run Application
-- Run Tests
-- Run Tests with Coverage
-- Lint Code
-- Format Code
-- Install Dependencies
+**Tasks** (`Ctrl+Shift+P` → "Tasks: Run Task"): Run Application, Tests, Lint, Format
 
 ## Troubleshooting
 
-### Pre-commit fails on first run
-
-```bash
-# Pre-commit downloads tools on first run
-poetry run pre-commit run --all-files
-```
-
-### Poetry lock file out of sync
-
-```bash
-poetry lock --no-update
-poetry install
-```
-
-### Tests fail locally but pass in CI
-
-```bash
-# Ensure you have the latest dependencies
-poetry install --sync
-```
-
-### Import errors
-
-```bash
-# Reinstall project in editable mode
-poetry install
-```
+| Issue                       | Solution                                                  |
+| --------------------------- | --------------------------------------------------------- |
+| Pre-commit fails first time | `poetry run pre-commit run --all-files` (downloads tools) |
+| Poetry lock out of sync     | `poetry lock --no-update && poetry install`               |
+| Import errors               | `poetry install` (reinstalls in editable mode)            |
+| Tests fail locally          | `poetry install --sync` (ensures dependencies match)      |
 
 ## Contributing
 
