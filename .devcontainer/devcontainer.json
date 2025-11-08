@@ -22,13 +22,13 @@
     }
   },
   "onCreateCommand": {
-    "install-poetry": "pip install poetry",
-    "config-poetry": "poetry config virtualenvs.in-project true"
+    "install-poetry": "pip install --user poetry",
+    "config-poetry": "$HOME/.local/bin/poetry config virtualenvs.in-project true"
   },
   "postCreateCommand": {
     "git-safe": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-    "install-deps": "poetry install",
-    "setup-precommit": "poetry run pre-commit install",
+    "install-deps": "$HOME/.local/bin/poetry install --with dev",
+    "setup-precommit": "$HOME/.local/bin/poetry run pre-commit install",
     "ready": "echo '✨ Dev container setup complete!'"
   },
   "containerEnv": {
@@ -36,7 +36,7 @@
     "PYTHONUNBUFFERED": "1"
   },
   "remoteEnv": {
-    "PATH": "/home/vscode/.local/bin:${containerEnv:PATH}:${containerWorkspaceFolder}/.venv/bin"
+    "PATH": "$HOME/.local/bin:${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
   },
   "forwardPorts": [],
   "shutdownAction": "stopContainer",
