@@ -12,6 +12,20 @@ else
         cp "$HOME/.gitconfig-host" "$HOME/.gitconfig" 2>/dev/null || true
         echo "  ✅ Git config imported from host"
     fi
+
+    if [ -n "$(git config --global user.name)" ]; then
+        echo "  ✅ Git user.name: $(git config --global user.name)"
+    else
+        echo "  ⚠️  Git user.name not configured"
+        echo "     → Set with: git config --global user.name 'Your Name'"
+    fi
+
+    if [ -n "$(git config --global user.email)" ]; then
+        echo "  ✅ Git user.email: $(git config --global user.email)"
+    else
+        echo "  ⚠️  Git user.email not configured"
+        echo "     → Set with: git config --global user.email 'your@email.com'"
+    fi
 fi
 
 echo "  → Configuring editor..."
@@ -19,20 +33,6 @@ git config --global core.editor 'code --wait'
 
 echo "  → Marking workspace as safe directory..."
 git config --global --add safe.directory "${PWD}"
-
-if [ -n "$(git config --global user.name)" ]; then
-    echo "  ✅ Git user.name: $(git config --global user.name)"
-else
-    echo "  ⚠️  Git user.name not configured"
-    echo "     → Set with: git config --global user.name 'Your Name'"
-fi
-
-if [ -n "$(git config --global user.email)" ]; then
-    echo "  ✅ Git user.email: $(git config --global user.email)"
-else
-    echo "  ⚠️  Git user.email not configured"
-    echo "     → Set with: git config --global user.email 'your@email.com'"
-fi
 
 echo ""
 echo "📦 Poetry & Python"

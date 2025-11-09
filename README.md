@@ -54,6 +54,8 @@ poetry install
 poetry run pre-commit install  # Enable git hooks
 ```
 
+> **📝 Note:** This template does **not** include `poetry.lock` in the repository. When you first run `poetry install`, Poetry will resolve dependencies and create a fresh `poetry.lock` file. For production applications based on this template, **commit your `poetry.lock`** to ensure reproducible builds.
+
 ### Option 2: Development Container (recommended)
 
 Open in VS Code → `Ctrl+Shift+P` → "Dev Containers: Reopen in Container"
@@ -212,6 +214,7 @@ Pre-configured settings included:
 | Issue                       | Solution                                                  |
 | --------------------------- | --------------------------------------------------------- |
 | Pre-commit fails first time | `poetry run pre-commit run --all-files` (downloads tools) |
+| No `poetry.lock` file       | Normal for template - run `poetry install` to generate it |
 | Poetry lock out of sync     | `poetry lock --no-update && poetry install`               |
 | Import errors               | `poetry install` (reinstalls in editable mode)            |
 | Tests fail locally          | `poetry install --sync` (ensures dependencies match)      |
