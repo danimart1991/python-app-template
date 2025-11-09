@@ -24,13 +24,7 @@
       ]
     }
   },
-  "onCreateCommand": "poetry config virtualenvs.in-project true",
-  "postCreateCommand": {
-    "git-config": "git config --global core.editor 'code --wait' && git config --global --add safe.directory ${containerWorkspaceFolder}",
-    "install-deps": "poetry install --with dev",
-    "setup-precommit": "poetry run pre-commit install",
-    "ready": "echo '✨ Dev container setup complete!'"
-  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "containerEnv": {
     "PYTHONPATH": "${containerWorkspaceFolder}/src",
     "PYTHONUNBUFFERED": "1"
@@ -38,6 +32,9 @@
   "remoteEnv": {
     "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
   },
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig-host,type=bind,consistency=cached,readonly"
+  ],
   "forwardPorts": [],
   "shutdownAction": "stopContainer",
   "remoteUser": "vscode"

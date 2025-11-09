@@ -17,7 +17,7 @@ updates:
       include: "scope"
     versioning-strategy: increase
 
-  # GitHub Actions
+  # GitHub Actions & Pre-commit hooks
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -28,6 +28,22 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
+      - "pre-commit"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # Dev Container
+  - package-ecosystem: "docker"
+    directory: "/.devcontainer"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "devcontainer"
     commit-message:
       prefix: "chore"
       include: "scope"
