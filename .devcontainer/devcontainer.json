@@ -4,6 +4,9 @@
   "features": {
     "ghcr.io/devcontainers/features/git:1": {
       "version": "latest"
+    },
+    "ghcr.io/devcontainers-extra/features/poetry:2": {
+      "version": "latest"
     }
   },
   "customizations": {
@@ -21,14 +24,11 @@
       ]
     }
   },
-  "onCreateCommand": {
-    "install-poetry": "pip install --user poetry",
-    "config-poetry": "$HOME/.local/bin/poetry config virtualenvs.in-project true"
-  },
+  "onCreateCommand": "poetry config virtualenvs.in-project true",
   "postCreateCommand": {
-    "git-safe": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-    "install-deps": "$HOME/.local/bin/poetry install --with dev",
-    "setup-precommit": "$HOME/.local/bin/poetry run pre-commit install",
+    "git-config": "git config --global core.editor 'code --wait' && git config --global --add safe.directory ${containerWorkspaceFolder}",
+    "install-deps": "poetry install --with dev",
+    "setup-precommit": "poetry run pre-commit install",
     "ready": "echo '✨ Dev container setup complete!'"
   },
   "containerEnv": {
@@ -36,7 +36,7 @@
     "PYTHONUNBUFFERED": "1"
   },
   "remoteEnv": {
-    "PATH": "$HOME/.local/bin:${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
+    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
   },
   "forwardPorts": [],
   "shutdownAction": "stopContainer",
