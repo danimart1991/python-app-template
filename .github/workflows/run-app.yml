@@ -46,7 +46,7 @@ jobs:
             echo "Running with custom text..."
             poetry run my-app --text "$INPUT_TEXT"
           elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "Running without arguments (will show help)..."
+            echo "Running without arguments (uses default text)..."
             poetry run my-app
           else
             echo "Running from push to main..."

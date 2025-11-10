@@ -55,3 +55,12 @@ jobs:
 
       - name: Verify APP works (--help)
         run: poetry run my-app --help
+
+      - name: Verify APP works (--text)
+        run: poetry run my-app --text "CI/CD test"
+
+      - name: Verify APP works (no arguments)
+        run: poetry run my-app
+
+      - name: Verify APP works (verbose logging)
+        run: poetry run my-app -vv --text "Verbose test"

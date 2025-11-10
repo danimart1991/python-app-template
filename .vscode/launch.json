@@ -8,7 +8,8 @@
       "module": "src.main",
       "args": [
         "--text",
-        "Debug mode"
+        "Debug mode",
+        "-vvvvv"
       ],
       "console": "integratedTerminal",
       "justMyCode": true,
@@ -21,6 +22,9 @@
       "type": "debugpy",
       "request": "launch",
       "module": "src.main",
+      "args": [
+        "-vvvvv"
+      ],
       "console": "integratedTerminal",
       "justMyCode": true,
       "env": {

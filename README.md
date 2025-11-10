@@ -21,11 +21,16 @@ poetry install
 
 # Run the app
 poetry run my-app --text "Hello World"
+
+# Run with verbose logging
+poetry run my-app -vv --text "Hello World"
 ```
 
 ## Features
 
 - ✅ Modern Python application with Poetry dependency management
+- ✅ Configurable logging levels (WARNING/INFO/DEBUG) with `-v` flags
+- ✅ Flexible command-line interface with optional text processing
 - ✅ Ruff for fast linting and formatting
 - ✅ Pytest with 80% coverage requirement
 - ✅ Pre-commit hooks with 17 automated checks
@@ -53,8 +58,6 @@ poetry run my-app --text "Hello World"
 poetry install
 poetry run pre-commit install  # Enable git hooks
 ```
-
-> **📝 Note:** This template does **not** include `poetry.lock` in the repository. When you first run `poetry install`, Poetry will resolve dependencies and create a fresh `poetry.lock` file. For production applications based on this template, **commit your `poetry.lock`** to ensure reproducible builds.
 
 ### Option 2: Development Container (recommended)
 
@@ -105,13 +108,51 @@ poetry run my-app --help
 # Show version
 poetry run my-app --version
 
-# Process text
+# Process text (--text is optional, uses default text if not provided)
 poetry run my-app --text "Your text here"
+
+# Run without text argument (uses default)
+poetry run my-app
+
+# Verbose logging levels
+poetry run my-app -v --text "text"     # INFO level
+poetry run my-app -vv --text "text"    # DEBUG level
+poetry run my-app --verbose --verbose --text "text"  # Same as -vv
 
 # Or activate shell
 poetry shell
 my-app --text "Your text here"
+my-app -vv  # Default text with DEBUG logging
 ```
+
+### Logging Levels
+
+The application supports different verbosity levels:
+
+- **Default (no flag)**: WARNING level - shows only warnings and errors
+- **`-v` or `--verbose`**: INFO level - shows informational messages
+- **`-vv` or `--verbose --verbose`**: DEBUG level - shows detailed debug information
+
+The `-v/--verbose` flag can be combined with any action (`--text`, `--version`, `--help`).
+
+**Log format**: `YYYY-MM-DD HH:MM:SS,mmm - logger_name - LEVEL - message`
+
+**Example output**:
+```
+$ poetry run my-app -v --text "Hello"
+2025-11-10 12:00:00,000 - root - INFO - Processing text: Hello
+Hello
+```
+
+### Command-Line Arguments
+
+The application accepts one of these mutually exclusive actions:
+
+- `--text TEXT`: Process and display the provided text
+- `--version`: Show program version and exit
+- `--help` or `-h`: Show help message and exit
+
+If no action is provided, the application will process default text with a warning.
 
 ## Development
 
@@ -124,11 +165,17 @@ poetry run pytest
 # With coverage
 poetry run pytest --cov=src --cov-report=term-missing
 
-# Only unit tests
-poetry run pytest -m unit
+# Only unit tests (excludes integration tests)
+poetry run pytest -m "not integration"
 
 # Only integration tests
 poetry run pytest -m integration
+
+# Verbose output
+poetry run pytest -v
+
+# Run specific test file
+poetry run pytest tests/test_main.py -v
 ```
 
 ### Code Quality
